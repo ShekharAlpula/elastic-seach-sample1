@@ -2,6 +2,7 @@ package com.example.elastic_seach_sample1.controllers;
 
 import java.util.List;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,9 +20,8 @@ import com.example.elastic_seach_sample1.services.CarsService;
 @RequestMapping("/cars")
 public class CarsController {
 
-    private CarsService carsService;
-
-    public CarsController(CarsService carsService){
+    private final CarsService carsService;
+    public CarsController(CarsService carsService) {
         this.carsService = carsService;
     }
 
@@ -37,6 +37,7 @@ public class CarsController {
 
     @GetMapping
     public Iterable<Car> getCars(){
+
         return carsService.getCars();
     }
 
@@ -51,8 +52,13 @@ public class CarsController {
         return "deleted car with id " + id;
     }
 
+    @DeleteMapping
+    public void deleteAllCars(){
+        carsService.deleteAllCars();
+    }
     @GetMapping("/find")
     public Iterable<Car> findByBrand(@RequestParam String brand){
+        //System.out.println("Brand: " + brand);
         return carsService.findByBrand(brand);
     }
 }
