@@ -2,8 +2,11 @@ package com.example.elastic_seach_sample1.services;
 
 import com.example.elastic_seach_sample1.models.Car;
 import com.example.elastic_seach_sample1.repositories.CarRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+@Service
 public class CarsService {
 
     private CarRepository carRepository;
@@ -13,7 +16,9 @@ public class CarsService {
     }
 
     public Car addCar(Car car) {
-        return carRepository.save(car);
+        car =  carRepository.save(car);
+        System.out.println(car.getId());
+        return car;
     }
 
     public Car getCar(String id) {
@@ -36,4 +41,7 @@ public class CarsService {
         return carRepository.findAllByBrandContaining(brand);
     }
 
+    public void deleteAllCars() {
+        carRepository.deleteAll();
+    }
 }
